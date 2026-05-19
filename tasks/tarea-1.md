@@ -25,12 +25,25 @@ Para instalar dependencias y ejecutar el proyecto, sigue el `README.md`.
 ## Preguntas de reflexion tecnica
 
 1. Que problema concreto resuelve el entorno virtual en un proyecto Python?
+Evita que se te arme un sancocho con las versiones. Te crea una carpeta separada para que lo que instales en esta tarea no te tire los proyectos viejos.
+
 2. Que diferencia hay entre instalar `Flask` globalmente y hacerlo dentro de `.venv`?
+Global es meterlo en el sistema de toda la compu del colegio (y despues se traba). Dentro de .venv es dejarlo guardadito solo en la carpeta de tu proyecto para que no estorbe.
+
 3. Por que `requirements.txt` forma parte del proyecto y no de tu maquina personal?
+Porque es la lista del mercado del codigo. Si subes la tarea a GitHub o me la pasas a mi por USB, yo necesito ver ese archivo para saber que instalar y que me corra igual que a ti.
+
 4. Cuando ejecutas `python app.py`, que archivo actua como punto de entrada y por que?
+El mismo app.py, porque es el archivo principal que tu estas llamando desde la terminal para que encienda el servidor de una.
+
 5. Que relacion hay entre la ruta `/`, la funcion `inicio()` y el archivo `templates/index.html`?
+Es el orden de llegada: tu entras al link principal (/), eso llama a la funcion inicio() en Python, y esa funcion te dispara en la pantalla el index.html.
+
 6. Que evidencia te da la terminal de que el servidor arranco correctamente?
+Que se queda quieta y te bota el link de siempre: el http://127.0.0.1:5000 para que entres a probar.
+
 7. Si cambias el HTML y el navegador muestra otra cosa, que te demuestra eso sobre el flujo entre backend y frontend en este proyecto?
+Que el frontend (la pagina) no se manda solo. Si el backend (Flask) no procesa y le manda el HTML actualizado cuando hundes F5, el navegador te va a seguir mostrando la version vieja.
 
 ## Entregable
 
