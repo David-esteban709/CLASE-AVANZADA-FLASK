@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 
+
 app = Flask(__name__)
 app.secret_key = "1234569"
 
@@ -205,14 +206,112 @@ def panel_profesor():
 
 
 
+
+
+
 @app.route("/panel-estudiante")
 def panel_estudiante():
     if 'usuario_id' not in session or session['rol'] != 'estudiante':
         return redirect(url_for("login"))
     
-    return render_template("panel-estudiante.html", usuario=session['usuario_nombre'])
+    tareas = Tarea.query.all()
+    return render_template("panel_estudiante.html", usuario=session['usuario_nombre'], tareas=tareas)
 
 
+
+
+
+class Tarea(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(100), nullable=False)
+    descripcion = db.Column(db.Text, nullable=False)
+    fecha_entrega = db.Column(db.Date, nullable=False)
+    creada_por = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
+    fecha_creacion = db.Column(db.DateTime, default=db.func.now())
+
+    profesor = db.relationship('Usuario', backref='tareas')
+
+    def __repr__(self):
+        return f'<Tarea {self.titulo}>'
+    
+
+
+
+
+
+
+
+    app.route("/crear_tarea", methods=["GET", "POST"])
+def crear_tarea():
+    # Solo profesor
+    if 'rol' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    if request.method == "POST":
+        titulo = request.form.get("titulo")
+        descripcion = request.form.get("descripcion")
+        fecha_entrega = request.form.get("fecha_entrega")
+        
+        nueva_tarea = Tarea(
+            titulo=titulo,
+            descripcion=descripcion,
+            fecha_entrega=fecha_entrega,
+            creada_por=session['usuario_id']
+        )
+        
+        db.session.add(nueva_tarea)
+        db.session.commit()
+        
+        return redirect(url_for("mis_tareas"))
+    
+    return render_template("crear_tarea.html")
+
+@app.route("/mis-tareas")
+def mis_tareas():
+    if 'rol' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    tareas = Tarea.query.all()
+    return render_template("mis_tareas.html", tareas=tareas)
+
+
+
+
+
+@app.route("/editar-tarea/<int:id>", methods=["GET", "POST"])
+def editar_tarea(id):
+    if 'rol' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    tarea = Tarea.query.get_or_404(id)
+    
+    if request.method == "POST":
+        tarea.titulo = request.form.get("titulo")
+        tarea.descripcion = request.form.get("descripcion")
+        tarea.fecha_entrega = request.form.get("fecha_entrega")
+        
+        db.session.commit()
+        return redirect(url_for("mis_tareas"))
+    
+    return render_template("editar_tarea.html", tarea=tarea)
+
+
+
+
+
+
+
+
+@app.route("/eliminar-tarea/<int:id>")
+def eliminar_tarea(id):
+    if 'rol' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    tarea = Tarea.query.get_or_404(id)
+    db.session.delete(tarea)
+    db.session.commit()
+    
+    return redirect(url_for("mis_tareas"))
 
 
 

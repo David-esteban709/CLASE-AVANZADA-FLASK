@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Mis Tareas</title>
+</head>
+<body>
+    <h1>Mis Tareas</h1>
+
+    <a href="/crear-tarea"><button>Nueva Tarea</button></a>
+
+    {% if tareas %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Titulo</th>
+                <th>Fecha Entrega</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tarea in tareas %}
+            <tr>
+                <td>{{ tarea.titulo }}</td>
+                <td>{{ tarea.fecha_entrega }}</td>
+                <td>
+                    <a href="/editar-tarea/{{ tarea.id }}">Editar</a>
+                    <a href="/eliminar-tarea/{{ tarea.id }}" onclick="return confirm('¿Eliminar?')">Eliminar</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay tareas creadas.</p>
+    {% endif %}
+</body>
+</html>
