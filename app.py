@@ -1,11 +1,35 @@
 # Importamos Flask y una funcion que permite mostrar un HTML.
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect, url_for
+from flask_sqlalchemy import SQLAlchemy
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
-# Creamos la aplicacion principal.
-# Este objeto sera el centro de nuestro proyecto Flask.
+
 app = Flask(__name__)
+app.secret_key = "1234569"
 
+# Configurar la base de datos
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///portal.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+
+
+
+
+class Estudiante(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nombre = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(100), nullable=False, unique=True)
+    programa = db.Column(db.String(50), nullable=False)
+    fecha_inscripcion = db.Column(db.DateTime, default=db.func.now())
+
+    def __repr__(self):
+        return f'<Estudiante {self.nombre}>'
+    
 
 # Cuando alguien entra a la direccion principal del sitio, Flask ejecuta
 # esta funcion y devuelve la pagina `index.html`.
@@ -63,6 +87,140 @@ def recursos():
 
     return render_template("recursos.html"
                            ,recursos=recursos)
+
+
+
+@app.route("/inscripcion", methods=["GET", "POST"])
+def inscripcion():
+    mensaje = None
+    
+    if request.method == "POST":
+        nombre = request.form.get("nombre")
+        email = request.form.get("email")
+        programa = request.form.get("programa")
+        
+        # Validacion
+        if not nombre or not email or not programa:
+            mensaje = "Por favor completa todos los campos."
+        else:
+            try:
+                # Crear nuevo estudiante
+                nuevo_estudiante = Estudiante(
+                    nombre=nombre,
+                    email=email,
+                    programa=programa
+                )
+                
+                # Guardar en BD
+                db.session.add(nuevo_estudiante)
+                db.session.commit()
+                
+                mensaje = f"Bienvenido {nombre}! Te hemos registrado."
+            except Exception as e:
+                db.session.rollback()
+                mensaje = f"Error: Este email ya esta registrado."
+    
+    return render_template("inscripcion.html", mensaje=mensaje)
+
+
+@app.route("/estudiantes")
+def estudiantes():
+    # Permitir acceso ÚNICAMENTE al profesor
+    if 'rol' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    lista_estudiantes = Estudiante.query.all()
+    return render_template("estudiantes.html", estudiantes=lista_estudiantes)
+
+
+
+
+
+class Usuario(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    usuario = db.Column(db.String(50), unique=True, nullable=False)
+    contraseña = db.Column(db.String(200), nullable=False)
+    rol = db.Column(db.String(20), nullable=False)  # "profesor" o "estudiante"
+
+    def establecer_contraseña(self, contraseña):
+        self.contraseña = generate_password_hash(contraseña)
+
+    def verificar_contraseña(self, contraseña):
+        return check_password_hash(self.contraseña, contraseña)
+
+    def __repr__(self):
+        return f'<Usuario {self.usuario}>'
+    
+
+
+@app.route("/login", methods=["GET", "POST"])
+def login():
+    mensaje = None
+    
+    if request.method == "POST":
+        usuario = request.form.get("usuario")
+        contraseña = request.form.get("contraseña")
+        
+        user = Usuario.query.filter_by(usuario=usuario).first()
+        
+        if user and user.verificar_contraseña(contraseña):
+            session['usuario_id'] = user.id
+            session['usuario_nombre'] = user.usuario
+            session['rol'] = user.rol
+            
+            if user.rol == "profesor":
+                return redirect(url_for("panel_profesor"))
+            else:
+                return redirect(url_for("panel_estudiante"))
+        else:
+            mensaje = "Usuario o contraseña incorrectos."
+    
+    return render_template("login.html", mensaje=mensaje)
+
+
+
+
+
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("inicio"))
+
+
+
+
+
+    
+
+
+@app.route("/panel-profesor")
+def panel_profesor():
+    # Verificar que esta logueado y es profesor
+    if 'usuario_id' not in session or session['rol'] != 'profesor':
+        return redirect(url_for("login"))
+    
+    return render_template("panel-profesor.html", usuario=session['usuario_nombre'])
+
+
+
+
+@app.route("/panel-estudiante")
+def panel_estudiante():
+    if 'usuario_id' not in session or session['rol'] != 'estudiante':
+        return redirect(url_for("login"))
+    
+    return render_template("panel-estudiante.html", usuario=session['usuario_nombre'])
+
+
+
+
+
+
+
+
+ 
+
 
 # Este bloque se ejecuta solo si corremos `python app.py` desde la terminal.
 if __name__ == "__main__":

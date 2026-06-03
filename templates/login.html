@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Portal Clase 1114</title>
+</head>
+<body>
+    <h1>Login Portal Clase 1114</h1>
+    
+    {% if mensaje %}
+    <p style="color: red;">{{ mensaje }}</p>
+    {% endif %}
+
+    <form method="POST">
+        <label>Usuario:</label>
+        <input type="text" name="usuario" required>
+        <br><br>
+
+        <label>Contraseña:</label>
+        <input type="password" name="contraseña" required>
+        <br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <hr>
+    <p>Datos de prueba:</p>
+    <p><strong>Profesor:</strong> usuario=henry, contraseña=password123</p>
+
+         <button><a href="/">Inicio</a></button>
+<button><a href="/acerca">Acerca</a></button>
+<button><a href="/contacto">Contacto</a> </button>
+<button><a href="/hola">hola</a> </button>
+<button><a href="/bien">bien</a> </button>
+<button><a href="/como">Como</a> </button>
+<button><a href="/recursos">Recursos</a> </button>
+<button><a href="/inscripcion">Inscripcion</a></button>
+</body>
+</html>

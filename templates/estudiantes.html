@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Estudiantes - Portal Clase 1114</title>
+</head>
+<body>
+    <!-- MENU -->
+    <nav>
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/informacion">Informacion</a></li>
+            <li><a href="/recursos">Recursos</a></li>
+            <li><a href="/tareas">Tareas</a></li>
+            <li><a href="/inscripcion">Inscripcion</a></li>
+            <li><a href="/estudiantes">Estudiantes</a></li>
+        </ul>
+    </nav>
+
+    <h1>Estudiantes Inscritos ({{ estudiantes|length }})</h1>
+
+    {% if estudiantes %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>Programa</th>
+                <th>Fecha Inscripcion</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for estudiante in estudiantes %}
+            <tr>
+                <td>{{ estudiante.nombre }}</td>
+                <td>{{ estudiante.email }}</td>
+                <td>{{ estudiante.programa }}</td>
+                <td>{{ estudiante.fecha_inscripcion.strftime('%d/%m/%Y %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No hay estudiantes inscritos aun.</p>
+    {% endif %}
+</body>
+</html>
