@@ -43,6 +43,9 @@ class Tarea(db.Model):
     fecha_entrega = db.Column(db.Date, nullable=False)
     creada_por = db.Column(db.Integer, db.ForeignKey('usuario.id'), nullable=False)
     fecha_creacion = db.Column(db.DateTime, default=db.func.now())
+    
+    # AGREGADA: Esta columna permitirá guardar la nota del alumno
+    calificacion = db.Column(db.Float, nullable=True) 
 
     profesor = db.relationship('Usuario', backref='tareas')
 
@@ -234,12 +237,37 @@ def editar_tarea(id):
         tarea.descripcion = request.form.get("descripcion")
         fecha_texto = request.form.get("fecha_entrega")
         
+        # AQUÍ ESTÁ LO QUE FALTABA:
+        tarea.calificacion = request.form.get("calificacion") 
+        
         tarea.fecha_entrega = datetime.strptime(fecha_texto, '%Y-%m-%d').date()
+        
+        
+        db.session.commit() # ¡Esto guarda los cambios!
+        return redirect(url_for("mis_tareas"))
+    
+
+
+    if request.method == "POST":
+        tarea.titulo = request.form.get("titulo")
+        tarea.descripcion = request.form.get("descripcion")
+        tarea.calificacion = request.form.get("calificacion") 
+        
+        # Validación de seguridad: solo convertimos si recibimos una fecha
+        fecha_texto = request.form.get("fecha_entrega")
+        if fecha_texto:
+            tarea.fecha_entrega = datetime.strptime(fecha_texto, '%Y-%m-%d').date()
         
         db.session.commit()
         return redirect(url_for("mis_tareas"))
     
+
+    
+    
     return render_template("editar_tarea.html", tarea=tarea)
+  
+    
+
 
 @app.route("/eliminar-tarea/<int:id>")
 def eliminar_tarea(id):

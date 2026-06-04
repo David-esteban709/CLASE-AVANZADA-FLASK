@@ -1,30 +1,42 @@
 {% extends "base.html" %}
 
-{% block title %}Tareas - Clase 1114{% endblock %}
-
 {% block content %}
-<div class="card shadow-sm border-0 p-4">
-    <h2 class="fw-bold text-primary mb-4">Tareas Entregables</h2>
-    
-    <table class="table table-hover align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th scope="col">Número</th>
-                <th scope="col">Título</th>
-                <th scope="col">Fecha de Entrega</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for tarea in tareas %}
-            <tr>
-                <td>{{ loop.index }}</td> 
-                
-                <td class="fw-bold">{{ tarea.titulo }}</td>
-                <td>{{ tarea.fecha_entrega }}</td>
-                
-                    
-            {% endfor %}
-        </tbody>
-    </table>
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Lista de Tareas</h2>
+        <a href="/crear-tarea" class="btn btn-primary">Crear Nueva Tarea</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Título</th>
+                    <th>Fecha Entrega</th>
+                    <th>Calificación</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tarea in tareas %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ tarea.titulo }}</td>
+                    <td>{{ tarea.fecha_entrega }}</td>
+                    <td>{{ tarea.calificacion if tarea.calificacion else 'Sin nota' }}</td>
+                    <td>
+                        <a href="{{ url_for('editar_tarea', id=tarea.id) }}" class="btn btn-sm btn-warning">Editar</a>
+                        <a href="{{ url_for('eliminar_tarea', id=tarea.id) }}" class="btn btn-sm btn-danger">Eliminar</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="5" class="text-center text-muted">No hay tareas creadas aún.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

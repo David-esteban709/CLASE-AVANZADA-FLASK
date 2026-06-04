@@ -17,7 +17,7 @@
         <div class="col-12">
             <div class="card shadow-sm border-0">
                 <div class="card-header bg-primary text-white py-3">
-                    <h5 class="mb-0 fw-bold">Tareas Pendientes</h5>
+                    <h5 class="mb-0 fw-bold">Tareas y Calificaciones</h5>
                 </div>
                 <div class="card-body p-0">
                     {% if tareas %}
@@ -28,8 +28,8 @@
                                         <th class="ps-4">Código</th>
                                         <th>Actividad / Título</th>
                                         <th>Descripción</th>
-                                        <th class="pe-4">Fecha de Entrega</th>
-                                    </tr>
+                                        <th>Fecha de Entrega</th>
+                                        <th class="pe-4">Calificación</th> </tr>
                                 </thead>
                                 <tbody class="small text-secondary">
                                     {% for tarea in tareas %}
@@ -37,7 +37,14 @@
                                             <td class="ps-4 fw-bold text-dark">#{{ tarea.id }}</td>
                                             <td class="fw-bold text-dark">{{ tarea.titulo }}</td>
                                             <td>{{ tarea.descripcion }}</td>
-                                            <td class="pe-4"><span class="badge bg-secondary px-2 py-1">{{ tarea.fecha_entrega }}</span></td>
+                                            <td><span class="badge bg-secondary px-2 py-1">{{ tarea.fecha_entrega }}</span></td>
+                                            <td class="pe-4">
+                                                {% if tarea.calificacion %}
+                                                    <span class="badge bg-success px-3 py-2 fs-6">{{ tarea.calificacion }}</span>
+                                                {% else %}
+                                                    <span class="text-muted fst-italic">Pendiente</span>
+                                                {% endif %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
