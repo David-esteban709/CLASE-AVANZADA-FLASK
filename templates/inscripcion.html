@@ -1,50 +1,39 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Inscripcion - Portal Clase 1114</title>
-</head>
-<body>
-    <!-- MENU -->
-    <nav>
-        <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/informacion">Informacion</a></li>
-            <li><a href="/recursos">Recursos</a></li>
-            <li><a href="/tareas">Tareas</a></li>
-            <li><a href="/inscripcion">Inscripcion</a></li>
-            <li><a href="/estudiantes">Estudiantes</a></li>
-          <button><a href="/login">LOGIN</a> </button>
-        </ul>
-    </nav>
+{% extends "base.html" %}
 
-    <h1>Inscripcion a la Clase</h1>
+{% block title %}Inscripcion - Clase 1114{% endblock %}
 
-    <!-- Mostrar mensaje de exito o error -->
-    {% if mensaje %}
-    <p style="color: green; font-weight: bold;">{{ mensaje }}</p>
-    {% endif %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="mb-4">Inscripción a la Clase</h1>
 
-    <!-- El formulario -->
-    <form method="POST">
-        <label for="nombre">Nombre:</label>
-        <input type="text" name="nombre" id="nombre" required>
-        <br><br>
+        {% if mensaje %}
+        <div class="alert alert-success shadow-sm">{{ mensaje }}</div>
+        {% endif %}
 
-        <label for="email">Email:</label>
-        <input type="email" name="email" id="email" required>
-        <br><br>
+        <form method="POST" class="needs-validation card p-4 shadow-sm border-0">
+            <div class="mb-3">
+                <label for="nombre" class="form-label fw-bold">Nombre:</label>
+                <input type="text" class="form-control" name="nombre" id="nombre" required>
+            </div>
 
-        <label for="programa">Programa:</label>
-        <select name="programa" id="programa" required>
-            <option value="">-- Selecciona --</option>
-            <option value="Sistemas">Sistemas</option>
-            <option value="Ingenierias">Ingenierias</option>
-            <option value="Otro">Otro</option>
-        </select>
-        <br><br>
+            <div class="mb-3">
+                <label for="email" class="form-label fw-bold">Email:</label>
+                <input type="email" class="form-control" name="email" id="email" required>
+            </div>
 
-        <button type="submit">Inscribirse</button>
-    </form>
-</body>
-</html>
+            <div class="mb-3">
+                <label for="programa" class="form-label fw-bold">Programa:</label>
+                <select name="programa" class="form-select" id="programa" required>
+                    <option value="">-- Selecciona --</option>
+                    <option value="Sistemas">Sistemas</option>
+                    <option value="Ingenierias">Ingenierias</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 fw-bold">Inscribirse</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

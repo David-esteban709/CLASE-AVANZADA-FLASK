@@ -1,46 +1,156 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Clase Flask 1114</title>
-  </head>
-  <body>
-    <!--
-      Esta pagina es muy simple a proposito.
-      La idea es que el alumno pueda leerla sin perderse.
-    -->
-<h1>DAVID ESTEBAN RIVERA TORRES  1114 </h1>
-    <h2>Bienvenidos a la clase del profe Henry by Kyrbot</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Clase 1114</title>
+    
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .navbar {
+            background-color: #667eea;
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 20px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Clase 1114</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/informacion">Informacion</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recursos">Recursos</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/tareas">Tareas</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/inscripcion">Inscripcion</a></li>
+                    {% if session.get('usuario_id') %}
+                    <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-    <p>
-      Si estas viendo esto, ya diste un primer paso en programacion: tu
-      aplicacion esta corriendo y Flask pudo mostrar una pagina HTML.
-    </p>
+    <!-- HERO SECTION -->
+    <div class="hero">
+        <div class="container">
+            <h1>Bienvenidos a Clase 1114</h1>
+            <p class="lead">Introduccion a Python y Flask</p>
+        </div>
+    </div>
 
-    <p>
-      Hoy empezamos simple, pero con una idea poderosa: cada gran programa
-      arranca con una primera linea de codigo. Este puede ser el comienzo de
-      algo enorme.
-    </p>
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-6">
+             <h4 class="fw-bold mb-3">Informacion de la Clase</h4>
+<ul class="list-unstyled small">
+    <li class="mb-2"><strong>Profesor:</strong> {{ info.profesor }}</li>
+    <li class="mb-2"><strong>github:</strong> {{ info.github }}</li>
+    <li class="mb-2"><strong>Horario:</strong> {{ info.horario }}</li>
+    <li class="mb-2"><strong>Aula:</strong> {{ info.aula }}</li>
+</ul>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Descripcion</h5>
+                        <p class="card-text">{{ descripcion }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <hr />
+    <!-- CARDS DESTACADAS -->
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Tareas</h5>
+                        <p class="card-text">Ver todas las tareas entregables del curso.</p>
+                        <a href="/tareas" class="btn btn-primary">Ver Tareas</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Recursos</h5>
+                        <p class="card-text">Documentacion y enlaces educativos.</p>
+                        <a href="/recursos" class="btn btn-primary">Ver Recursos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Inscripcion</h5>
+                        <p class="card-text">Registrate como estudiante de la clase.</p>
+                        <a href="/inscripcion" class="btn btn-primary">Inscribirse</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <p>Primer objetivo cumplido: crear el entorno y levantar el servidor.</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Portal Clase 1114 | Profesor: Henry Ortegon | Kyrbot Innovations</p>
+        </div>
+    </footer>
 
-    <p>
-      Ahora este proyecto empieza a convertirse en un Mini Portal de Clase
-      Flask. En la tarea 3 vas a crear nuevas paginas y conectarlas con rutas.
-    </p>
-      <h1>hola por aca hay enclaces</h1>
-      <button><a href="/">Inicio</a></button>
-<button><a href="/acerca">Acerca</a></button>
-<button><a href="/contacto">Contacto</a> </button>
-<button><a href="/hola">hola</a> </button>
-<button><a href="/bien">bien</a> </button>
-<button><a href="/como">Como</a> </button>
-<button><a href="/recursos">Recursos</a> </button>
-<button><a href="/inscripcion">Inscripcion</a></button>
-<button><a href="/login">LOGIN</a> </button>
-  </body>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

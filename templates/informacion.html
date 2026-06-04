@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Información de la Clase - Clase 1114{% endblock %}
+
+{% block content %}
+<div class="row g-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 h-100">
+            <h2 class="fw-bold text-primary mb-4">Información de la Clase</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between px-0 py-3">
+                    <span class="fw-bold text-dark">Profesor:</span>
+                    <span class="text-muted">Henry Ortegon</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0 py-3">
+                    <span class="fw-bold text-dark">Email:</span>
+                    <span class="text-muted">henry.ortegon@inem.edu.co</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between px-0 py-3">
+                    <span class="fw-bold text-dark">Horario:</span>
+                    <span class="text-muted">Lunes a Viernes - 07:00 AM</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 p-4 h-100">
+            <h2 class="fw-bold text-primary mb-4">Objetivos</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item px-0 py-2">✓ Comprender la lógica de programación.</li>
+                <li class="list-group-item px-0 py-2">✓ Dominar el framework Flask.</li>
+                <li class="list-group-item px-0 py-2">✓ Desarrollar aplicaciones web funcionales.</li>
+                <li class="list-group-item px-0 py-2">✓ Implementar bases de datos con SQLite.</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

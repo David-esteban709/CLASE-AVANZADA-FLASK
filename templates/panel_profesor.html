@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Panel Profesor - Clase 1114{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- ENCABEZADO -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="p-4 bg-white rounded shadow-sm border-0">
+                <h2 class="fw-bold text-dark mb-1">Bienvenido, {{ usuario }}</h2>
+                <p class="text-muted mb-0 small">Panel de Administración Docente - Sección 1114</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MENÚ DE OPCIONES DEL PROFESOR (TODOS LOS BOTONES IGUALES) -->
+    <div class="row g-4">
+        <!-- Tarjeta 1 -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-dark mb-2">Asignar Actividad</h5>
+                    <p class="text-muted small">Publicar una nueva tarea evaluable para los estudiantes del grupo.</p>
+                    <a href="/crear-tarea" class="btn btn-primary btn-sm fw-bold px-3">Crear Tarea</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 2 -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-dark mb-2">Control de Tareas</h5>
+                    <p class="text-muted small">Revisar, editar los plazos o eliminar las actividades vigentes.</p>
+                    <a href="/mis-tareas" class="btn btn-primary btn-sm fw-bold px-3">Gestionar Tareas</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tarjeta 3 -->
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold text-dark mb-2">Listado de Alumnos</h5>
+                    <p class="text-muted small">Ver la lista completa de los estudiantes registrados en la materia.</p>
+                    <a href="/estudiantes" class="btn btn-primary btn-sm fw-bold px-3">Ver Alumnos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

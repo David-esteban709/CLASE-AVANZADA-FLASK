@@ -1,47 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Estudiantes - Portal Clase 1114</title>
-</head>
-<body>
-    <!-- MENU -->
-    <nav>
-        <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/informacion">Informacion</a></li>
-            <li><a href="/recursos">Recursos</a></li>
-            <li><a href="/tareas">Tareas</a></li>
-            <li><a href="/inscripcion">Inscripcion</a></li>
-            <li><a href="/estudiantes">Estudiantes</a></li>
-        </ul>
-    </nav>
+{% extends "base.html" %}
 
-    <h1>Estudiantes Inscritos ({{ estudiantes|length }})</h1>
+{% block title %}Listado de Alumnos - Clase 1114{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 p-4">
+    <div class="border-bottom pb-3 mb-4">
+        <h2 class="fw-bold text-primary mb-1">Listado de Alumnos</h2>
+        <p class="text-muted small">Estudiantes registrados en la sección 1114</p>
+    </div>
 
     {% if estudiantes %}
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Email</th>
-                <th>Programa</th>
-                <th>Fecha Inscripcion</th>
-            </tr>
-        </thead>
-        <tbody>
+        <ul class="list-unstyled">
             {% for estudiante in estudiantes %}
-            <tr>
-                <td>{{ estudiante.nombre }}</td>
-                <td>{{ estudiante.email }}</td>
-                <td>{{ estudiante.programa }}</td>
-                <td>{{ estudiante.fecha_inscripcion.strftime('%d/%m/%Y %H:%M') }}</td>
-            </tr>
+                <li class="py-2 border-bottom">
+                    <span class="fw-bold text-dark">{{ estudiante.nombre }}</span>
+                    <br>
+                    <small class="text-muted">{{ estudiante.usuario }}@inem.edu.co</small>
+                </li>
             {% endfor %}
-        </tbody>
-    </table>
+        </ul>
     {% else %}
-    <p>No hay estudiantes inscritos aun.</p>
+        <p class="text-muted text-center">No hay estudiantes registrados.</p>
     {% endif %}
-</body>
-</html>
+</div>
+{% endblock %}

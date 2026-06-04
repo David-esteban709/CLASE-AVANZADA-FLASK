@@ -1,40 +1,55 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Login - Portal Clase 1114</title>
-</head>
-<body>
-    <h1>Login Portal Clase 1114</h1>
-    
-    {% if mensaje %}
-    <p style="color: red;">{{ mensaje }}</p>
-    {% endif %}
+{% extends "base.html" %}
 
-    <form method="POST">
-        <label>Usuario:</label>
-        <input type="text" name="usuario" required>
-        <br><br>
+{% block title %}Login - Clase 1114{% endblock %}
 
-        <label>Contraseña:</label>
-        <input type="password" name="contraseña" required>
-        <br><br>
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        
+        <div class="card bg-light border-0 shadow-sm mb-4">
+            <div class="card-body py-3 px-4 text-muted">
+                <span class="d-block fw-bold text-dark mb-2 small text-uppercase tracking-wide">Accesos de demostración:</span>
+                <div class="row g-2 text-secondary small">
+                    <div class="col-6">
+                        <span class="d-block"><strong>Docente:</strong></span>
+                        <span>Usuario: <code>henry</code></span><br>
+                        <span>Clave: <code>password123</code></span>
+                    </div>
+                    <div class="col-6 border-start ps-3">
+                        <span class="d-block"><strong>Estudiante:</strong></span>
+                        <span>Usuario: <code>david</code></span><br>
+                        <span>Clave: <code>estudiante123</code></span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <button type="submit">Login</button>
-    </form>
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white text-center py-3">
+                <h4 class="mb-0 fw-bold">Plataforma Académica</h4>
+            </div>
+            <div class="card-body p-4">
+                
+                {% if mensaje %}
+                <div class="alert alert-danger text-center shadow-sm py-2 small">{{ mensaje }}</div>
+                {% endif %}
 
-    <hr>
-    <p>Datos de prueba:</p>
-    <p><strong>Profesor:</strong> usuario=henry, contraseña=password123</p>
-<p><strong>Estudiante:</strong> usuario=david, contraseña=estudiante123</p>
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="usuario" class="form-label text-secondary small fw-bold">Usuario</label>
+                        <input type="text" class="form-control form-control-lg fs-6" name="usuario" id="usuario" placeholder="Ingrese su usuario" required>
+                    </div>
 
-         <button><a href="/">Inicio</a></button>
-<button><a href="/acerca">Acerca</a></button>
-<button><a href="/contacto">Contacto</a> </button>
-<button><a href="/hola">hola</a> </button>
-<button><a href="/bien">bien</a> </button>
-<button><a href="/como">Como</a> </button>
-<button><a href="/recursos">Recursos</a> </button>
-<button><a href="/inscripcion">Inscripcion</a></button>
-</body>
-</html>
+                    <div class="mb-4">
+                        <label for="contraseña" class="form-label text-secondary small fw-bold">Contraseña</label>
+                        <input type="password" class="form-control form-control-lg fs-6" name="contraseña" id="contraseña" placeholder="Ingrese su contraseña" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold fs-6 shadow-sm py-2">Iniciar Sesión</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

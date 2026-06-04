@@ -1,24 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>RECURSOS</h1>
-    <ol>  {% for recurso in recursos %}
-    <li>{{ recurso }}</li>
-  {% endfor %}</ol>
+{% extends "base.html" %}
 
-      <h1>hola por aca hay enlaces a otras paginas</h1>
-    <button><a href="/">Inicio</a></button>
-<button><a href="/acerca">Acerca</a></button>
-<button><a href="/contacto">Contacto</a> </button>
-<button><a href="/hola">hola</a> </button>
-<button><a href="/bien">bien</a> </button>
-<button><a href="/como">Como</a> </button>
-<button><a href="/recursos">Recursos</a> </button>
-<button><a href="/login">LOGIN</a> </button>
-</body>
-</html>
+{% block title %}Recursos - Clase 1114{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm border-0 p-4">
+    <div class="border-bottom pb-3 mb-4">
+        <h2 class="fw-bold text-primary mb-1">Material de Apoyo</h2>
+        <p class="text-muted small mb-0">Temas clave desarrollados durante el corte académico - Sección 1114</p>
+    </div>
+
+    {% if recursos %}
+        <div class="row g-3">
+            {% for recurso in recursos %}
+                <div class="col-12">
+                    <div class="p-3 bg-light rounded border-start border-primary border-3">
+                        <h6 class="fw-bold text-dark mb-1">{{ recurso }}</h6>
+                        <span class="text-muted small">Documentación oficial y guías prácticas de la materia.</span>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted">No hay recursos disponibles en este momento.</p>
+    {% endif %}
+</div>
+{% endblock %}

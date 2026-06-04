@@ -1,27 +1,41 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Crear Tarea</title>
-</head>
-<body>
-    <h1>Crear Nueva Tarea</h1>
+{% extends "base.html" %}
 
-    <form method="POST">
-        <label>Titulo:</label>
-        <input type="text" name="titulo" required>
-        <br><br>
+{% block title %}Crear Tarea - Clase 1114{% endblock %}
 
-        <label>Descripcion:</label>
-        <textarea name="descripcion" rows="5" required></textarea>
-        <br><br>
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="mb-0 fw-bold">Asignar Nueva Actividad</h5>
+            </div>
+            
+            <div class="card-body p-4">
+                <form action="/crear-tarea" method="POST">
+                    
+                    <div class="mb-3">
+                        <label for="titulo" class="form-label text-secondary small fw-bold">Título de la actividad</label>
+                        <input type="text" class="form-control" name="titulo" id="titulo" placeholder="Ej: Taller " required>
+                    </div>
 
-        <label>Fecha de Entrega:</label>
-        <input type="date" name="fecha_entrega" required>
-        <br><br>
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label text-secondary small fw-bold">Descripción / Instrucciones</label>
+                        <textarea class="form-control" name="descripcion" id="descripcion" rows="4" placeholder="Escriba los puntos a evaluar" required></textarea>
+                    </div>
 
-        <button type="submit">Crear Tarea</button>
-        <a href="/mis-tareas"><button type="button">Cancelar</button></a>
-    </form>
-</body>
-</html>
+                    <div class="mb-4">
+                        <label for="fecha_entrega" class="form-label text-secondary small fw-bold">Fecha límite de entrega</label>
+                        <input type="date" class="form-control" name="fecha_entrega" id="fecha_entrega" required>
+                    </div>
+
+                    <div class="d-flex justify-content-end gap-2">
+                        <a href="/panel_profesor" class="btn btn-light btn-sm fw-bold px-3 text-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-primary btn-sm fw-bold px-4 shadow-sm">Publicar Actividad</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
